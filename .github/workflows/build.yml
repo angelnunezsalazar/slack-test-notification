@@ -7,14 +7,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,workflow,commit
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
       - uses: jwalton/gh-find-current-pr@v1
         id: findPr
         with:
@@ -27,7 +19,7 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                pretext: ':rocket: Deploy to Test',
+                pretext: ':rocket: *DEPLOY TO TEST*',
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 text: `*Project* ${ process.env.AS_REPO }\n*Workflow* ${ process.env.AS_WORKFLOW }\n*Pull Request* <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
               }]
