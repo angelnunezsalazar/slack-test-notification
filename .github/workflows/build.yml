@@ -1,6 +1,8 @@
 name: Build
 on:
   push:
+env:
+  ENVIRONMENT: test
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,13 +18,13 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: custom
-          fields: workflow,job,message,commit,repo,ref,author,took
+          fields: workflow,commit,repo,ref
           custom_payload: |
             {
               attachments: [{
-                title: ':rocket: Deploy to Test',
+                title: `:rocket: Deploy to ${process.env.ENVIRONMENT[0].toUpperCase() + process.env.ENVIRONMENT.substring(1)}`,
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `Project: ${ process.env.AS_REPO }\nWorkflow: ${ process.env.AS_WORKFLOW }\nPull Request: <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
+                text: `Project: ${ process.env.AS_REPO }\nWorkflow: ${ process.env.AS_WORKFLOW }\n${'${{ steps.findPr.outputs.number }}'!== ''?'Pull Request: <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>':'Commit: ' + process.env.AS_COMMIT}`
               }]
             }
         env:
