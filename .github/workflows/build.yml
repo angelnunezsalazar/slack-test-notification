@@ -22,7 +22,7 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                title: ':rocket: Deploy to ${process.env.ENVIRONMENT[0].toUpperCase() + process.env.ENVIRONMENT.substring(1)}',
+                title: `:rocket: Deploy to ${process.env.ENVIRONMENT[0].toUpperCase() + process.env.ENVIRONMENT.substring(1)}`,
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 text: `Project: ${ process.env.AS_REPO }\nWorkflow: ${ process.env.AS_WORKFLOW }\nPull Request: <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
               }]
