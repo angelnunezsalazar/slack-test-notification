@@ -24,7 +24,7 @@ jobs:
               attachments: [{
                 title: `:rocket: Deploy to ${process.env.ENVIRONMENT[0].toUpperCase() + process.env.ENVIRONMENT.substring(1)}`,
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `Project: ${ process.env.AS_REPO }\nWorkflow: ${ process.env.AS_WORKFLOW }\n${ '${{steps.findPr.outputs.number}}' ? Pull Request: <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}> : Commit: process.env.AS_COMMIT}`
+                text: `Project: ${ process.env.AS_REPO }\nWorkflow: ${ process.env.AS_WORKFLOW }\n${null?Pull Request: <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>:Commit: process.env.AS_COMMIT}`
               }]
             }
         env:
