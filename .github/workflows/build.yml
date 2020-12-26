@@ -21,7 +21,7 @@ jobs:
               attachments: [{
                 title: ':rocket: Deploy to Test',
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `Project ${ process.env.AS_REPO }\nWorkflow ${ process.env.AS_WORKFLOW }\nPull Request <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
+                text: `Project: ${ process.env.AS_REPO }\nWorkflow: ${ process.env.AS_WORKFLOW }\nPull Request: <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
               }]
             }
         env:
