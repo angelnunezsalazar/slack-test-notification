@@ -27,8 +27,9 @@ jobs:
           custom_payload: |
             {
               attachments: [{
+                pretext: 'Optional pre-text that appears above the attachment block',
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `*Project* ${ process.env.AS_REPO }\n*Workflow* ${ process.env.AS_WORKFLOW }\n*PR* <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
+                text: `*Project* ${ process.env.AS_REPO }\n*Workflow* ${ process.env.AS_WORKFLOW }\n*Pull Request* <https://github.com/katu-digital/${{ github.event.repository.name }}/pull/${{ steps.findPr.outputs.number }}|${{ steps.findPr.outputs.title}}>`
               }]
             }
         env:
