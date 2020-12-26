@@ -11,6 +11,7 @@ jobs:
         id: findPr
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "Number ${{ steps.findPr.outputs.pr }} Title:"
       - name: Slack Notification 3
         uses: 8398a7/action-slack@v3
         with:
