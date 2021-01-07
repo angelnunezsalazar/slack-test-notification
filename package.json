@@ -1,0 +1,25 @@
+{
+  "name": "slack-test-notification",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snahider/slack-test-notification.git"
+  },
+  "devDependencies": {
+    "husky": "^4.3.7",
+    "validate-branch-name": "^1.0.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "validate-branch-name"
+    }
+  },
+  "validate-branch-name": {
+    "pattern": "^master$|^(feature|bug|hotfix|refactor|build|build|test)/(KATU-\\d+_)[a-z-]+|release/\\d{4}-\\d{2}-\\d{2}",
+    "errorMsg": "El nombre de la rama no sigue la convensión"
+  }
+}
