@@ -1,0 +1,17 @@
+name: Check PR Title
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+
+jobs:
+  pr-title:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: deepakputhraya/action-pr-title@v1.0.1
+      with:
+        regex: '^(Feature|Bug|Hotfix|Refactor|Build|Test):\s(KATU-\d+)\s[a-z-\s]+'
+        prefix_case_sensitive: false
