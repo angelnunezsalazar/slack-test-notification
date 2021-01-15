@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          ref: ${{steps.var-git-ref.outputs.GIT_REF}}
+          ref: github.event.inputs.full-sha
   release-branch:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
@@ -36,13 +36,12 @@ jobs:
         id: release-branch-name
         run: |
           echo ::set-output name=RELEASE_BRANCH_NAME::release/$(date +'%Y-%m-%d')
-          echo {{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
       - name: Create Release Branch
         if: github.ref == 'refs/heads/master'
         run: |
-          git checkout -b {{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
+          git checkout -b ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}"
       - name: Push Release Branch
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: "{{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}"
+          branch: ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
