@@ -28,7 +28,7 @@ jobs:
           git push origin ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
   deploy:
     runs-on: ubuntu-latest
-    if: contains(github.ref, "release/")
+    if: contains(github.ref, "release")
     outputs:
       GIT_REF: ${{steps.var-git-ref.outputs.GIT_REF}}
     steps:
