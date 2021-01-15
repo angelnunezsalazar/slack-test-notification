@@ -31,6 +31,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{needs.build.outputs.GIT_REF}}
+          token: ${{ secrets.PAT }}
       - name: Variable RELEASE_BRANCH_NAME
         if: github.ref == 'refs/heads/master'
         id: release-branch-name
@@ -39,8 +40,6 @@ jobs:
       - name: Create Release Branch
         if: github.ref == 'refs/heads/master'
         run: |
-          git config --global user.name 'Github Action'
-          git config --global user.email 'github_action@noreply.github.com'
           git checkout -b ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
           git push origin ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
       # - name: Push Release Branch
