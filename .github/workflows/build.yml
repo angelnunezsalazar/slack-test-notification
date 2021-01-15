@@ -24,6 +24,7 @@ jobs:
           ref: ${{steps.var-git-ref.outputs.GIT_REF}}
   release-branch:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     needs: build
     steps:
       - name: Checkout Code
