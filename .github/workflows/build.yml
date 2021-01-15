@@ -9,45 +9,30 @@ on:
     branches: 
       - 'release/**'
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      GIT_REF: ${{steps.var-git-ref.outputs.GIT_REF}}
-    steps:
-      - name: Variable GIT_REF
-        id: var-git-ref
-        run: |
-          echo ::set-output name=GIT_REF::${{ github.event.inputs.full-sha && github.event.inputs.full-sha ||  env.GITHUB_SHA  }}
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-          ref: ${{github.event.inputs.full-sha}}
   release-branch:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    needs: build
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          ref: ${{needs.build.outputs.GIT_REF}}
-          # token: ${{ secrets.PAT }}
+          ref: ${{ github.event.inputs.full-sha }}
+          token: ${{ secrets.PAT }}
       - name: Variable RELEASE_BRANCH_NAME
-        if: github.ref == 'refs/heads/master'
         id: release-branch-name
         run: |
           echo ::set-output name=RELEASE_BRANCH_NAME::release/$(date +'%Y-%m-%d')
       - name: Create Release Branch
-        if: github.ref == 'refs/heads/master'
         run: |
           git checkout -b ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
           git push origin ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
-      # - name: Push Release Branch
-      #   uses: ad-m/github-push-action@v0.6.0
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
-      # - uses: mikeal/publish-to-github-action@1.0.0
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     BRANCH_NAME: ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
+  deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      GIT_REF: ${{steps.var-git-ref.outputs.GIT_REF}}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Deploy
+        run: |
+          echo "Deploy"
