@@ -39,7 +39,7 @@ jobs:
       - name: Create Release Branch
         if: github.ref == 'refs/heads/master'
         run: |
-          git checkout -b ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}"
+          git checkout -b ${{ steps.release-branch-name.outputs.RELEASE_BRANCH_NAME }}
       - name: Push Release Branch
         uses: ad-m/github-push-action@v0.6.0
         with:
